@@ -60,6 +60,22 @@ Enemy.prototype.checkCollisions = function() {
     }
 }
 
+// Calls the win modal after game has been won 
+Player.prototype.declareWin = function() {
+    let modal = document.getElementById('winModal');
+    let closeButton = document.querySelector('.close');
+    let playAgainButton = document.querySelector('.playAgain');
+    modal.style.display = "block";
+    playAgainButton.onclick = function() {
+        modal.style.display = "none";
+        location.reload();
+    };
+    closeButton.onclick = function() {
+        modal.style.display = "none";
+        location.reload();
+    };
+}
+
 Player.prototype.handleInput = function(allowedKeys) {
     switch(allowedKeys) {
         case 'left': {
@@ -82,14 +98,13 @@ Player.prototype.handleInput = function(allowedKeys) {
             if(this.y > 0) {
                 this.y -= 80;
             } 
-            if(this.y < 60) {
-                this.update();
-                alert('Winner winner chicken dinner');
+            if(this.y < 0) {
+                setTimeout(function() {
+                    player.declareWin();
+                }, 200);
             }
             break;
         }
-        
-
         case 'down': {
             if(this.y < 380) {
                 this.y += 80;
