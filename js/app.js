@@ -50,13 +50,16 @@ Player.prototype.render = function() {
 };
 
 // Loops through each enemy to check if there are collisions,
-// if yes reloads the page
+// if yes resets the player
 Enemy.prototype.checkCollisions = function() {
     let dx = player.x - this.x;
     let dy = player.y - this.y;
     let distance = Math.sqrt(dx*dx + dy*dy);
     if(distance < player.radius + this.radius) {
-        location.reload();
+        //reset player Position
+        player.x = 200;
+        player.y = 380;
+        player.update();
     }
 }
 
@@ -67,7 +70,10 @@ Player.prototype.declareWin = function() {
     modal.style.display = "block";
     playAgainButton.onclick = function() {
         modal.style.display = "none";
-        location.reload();
+        //reset player Position
+        player.x = 200;
+        player.y = 380;
+        player.update();
     };
 }
 
