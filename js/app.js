@@ -63,19 +63,16 @@ Enemy.prototype.checkCollisions = function() {
 // Calls the win modal after game has been won 
 Player.prototype.declareWin = function() {
     let modal = document.getElementById('winModal');
-    let closeButton = document.querySelector('.close');
     let playAgainButton = document.querySelector('.playAgain');
     modal.style.display = "block";
     playAgainButton.onclick = function() {
         modal.style.display = "none";
         location.reload();
     };
-    closeButton.onclick = function() {
-        modal.style.display = "none";
-        location.reload();
-    };
 }
 
+// Handles 4 key events left,up,down and right of the player
+// player can move horizontally across the screen, but not vertically (would hit bottom or top)
 Player.prototype.handleInput = function(allowedKeys) {
     switch(allowedKeys) {
         case 'left': {
@@ -99,6 +96,7 @@ Player.prototype.handleInput = function(allowedKeys) {
                 this.y -= 80;
             } 
             if(this.y < 0) {
+                // to compensate for the time lag caused by update method
                 setTimeout(function() {
                     player.declareWin();
                 }, 200);
